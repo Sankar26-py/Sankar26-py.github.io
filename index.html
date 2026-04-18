@@ -48,10 +48,7 @@ nav ul a:hover{color:var(--accent);}
 .profile-photo{width:120px;height:120px;border-radius:50%;overflow:hidden;border:3px solid var(--accent);box-shadow:0 8px 32px rgba(0,229,160,.2);position:relative;}
 .photo-placeholder{width:100%;height:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:800;color:#050510;}
 #profileImg{width:100%;height:100%;object-fit:cover;}
-.photo-upload-btn{font-family:var(--mono);font-size:.72rem;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.3);color:var(--accent);padding:.5rem 1rem;border-radius:5px;cursor:pointer;transition:all .2s;}
-.photo-upload-btn:hover{background:rgba(0,229,160,.2);border-color:var(--accent);}
-.photo-remove-btn{font-family:var(--mono);font-size:.72rem;background:rgba(255,101,132,.1);border:1px solid rgba(255,101,132,.3);color:var(--accent3);padding:.5rem 1rem;border-radius:5px;cursor:pointer;transition:all .2s;}
-.photo-remove-btn:hover{background:rgba(255,101,132,.2);border-color:var(--accent3);}
+
 
 h1.name{font-size:clamp(3.5rem,9vw,8rem);font-weight:800;line-height:.9;letter-spacing:-.05em;opacity:0;animation:up .7s .25s forwards;}
 h1.name .g{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -234,17 +231,9 @@ footer{text-align:center;padding:2rem 5%;border-top:1px solid var(--border);font
   
   <!-- Profile Photo Section -->
   <div class="profile-photo-wrapper">
-    <div class="profile-photo" id="profilePhoto">
-      <div class="photo-placeholder" id="photoPlaceholder">
-        <span>SK</span>
-      </div>
-      <img id="profileImg" style="display:none;" alt="Sankar K">
+    <div class="profile-photo">
+      <img src="Sankar.jpg" alt="Sankar K" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
     </div>
-    <label for="photoUpload" class="photo-upload-btn">
-      📸 Upload Photo
-      <input type="file" id="photoUpload" accept="image/*" style="display:none;">
-    </label>
-    <button id="removePhoto" class="photo-remove-btn" style="display:none;">✕ Remove</button>
   </div>
   
   <h1 class="name"><span class="g">Sankar K</span><br>Backend Dev.</h1>
@@ -559,45 +548,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('scrollBar').style.width = p + '%';
 });
 
-// Profile Photo Upload/Remove
-const photoUpload = document.getElementById('photoUpload');
-const profileImg = document.getElementById('profileImg');
-const photoPlaceholder = document.getElementById('photoPlaceholder');
-const removePhotoBtn = document.getElementById('removePhoto');
-
-// Load saved photo on page load
-const savedPhoto = localStorage.getItem('profilePhoto');
-if (savedPhoto) {
-  profileImg.src = savedPhoto;
-  profileImg.style.display = 'block';
-  photoPlaceholder.style.display = 'none';
-  removePhotoBtn.style.display = 'inline-block';
-}
-
-photoUpload.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const imageData = event.target.result;
-      localStorage.setItem('profilePhoto', imageData);
-      profileImg.src = imageData;
-      profileImg.style.display = 'block';
-      photoPlaceholder.style.display = 'none';
-      removePhotoBtn.style.display = 'inline-block';
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-removePhotoBtn.addEventListener('click', () => {
-  localStorage.removeItem('profilePhoto');
-  profileImg.style.display = 'none';
-  profileImg.src = '';
-  photoPlaceholder.style.display = 'flex';
-  removePhotoBtn.style.display = 'none';
-  photoUpload.value = '';
-});
+// Profile photo embedded directly as base64
 
 // Resume Download (Footer/Contact Section)
 // IMPORTANT: Replace 'Sankar_K_Resume.pdf' with the actual path to your resume PDF
